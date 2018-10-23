@@ -6,8 +6,9 @@ run `npm i && npm link`
 
 ## Use
 
-call the search with `jfind [TICKET]` via cli.
+rename sample.env to .env and enter the base url of your jira.
+call the search with `jopen [TICKET]` via cli.
 
 ## ToDos
 
-[ ] make configurable 
+[ ] make configurable

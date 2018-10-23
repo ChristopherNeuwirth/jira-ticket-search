@@ -1,22 +1,29 @@
 #!/usr/bin/env node --harmony
-'use strict';
 
-const program = require('commander'),
-      opn     = require('opn'),
-      pkg     = require('./package.json');
+"use strict";
 
+require('dotenv').config();
 
-let searchFunction = (ticket) => {
-  if (ticket.Command) {
-    console.log('🔖 Please specify the ticket you want to open.');
+const program = require("commander"),
+  opn = require("opn"),
+  pkg = require("./package.json");
+
+let searchFunction = ticket => {
+
+  if (!process.env.BASEURL) {
+    console.error("⚙️  Please specify the base url in .env file.");
+    console.log("Rename sample.env to .env and add the base url to your jira.");
     process.exit(1);
   }
 
-  opn(`https://atlassianp01.web.porsche.biz/jira/browse/${ticket}`);
-  process.exit(0);
-}
+  if (ticket.Command) {
+    console.log("🔖 Please specify the ticket you want to open.");
+    process.exit(1);
+  }
 
-program
-  .version(pkg.version)
-  .action(searchFunction);
+  opn(`${process.env.BASEURL}${ticket}`);
+  process.exit(0);
+};
+
+program.version(pkg.version).action(searchFunction);
 program.parse(process.argv);
